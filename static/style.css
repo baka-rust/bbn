@@ -29,6 +29,12 @@ a.title:hover {
 	color: #C00;
 }
 
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #header {
 	background: #F9F9F9;
 	color: #000;
@@ -38,6 +44,7 @@ a.title:hover {
 	font-size: 18px;
 	border-bottom: 1px solid #D4D4D4;
 	margin-bottom: 30px;
+	min-width: 750px;
 }
 
 #nav {
@@ -54,6 +61,14 @@ a.title:hover {
 div.post {
 	padding: 5px;
 	border: 1px solid #D4D4D4;
+	margin-bottom: 20px;
+}
+
+div.rss-update {
+	padding: 5px;
+	border: 1px solid #D4D4D4;
+	background: #F9F9F9;
+	margin-bottom: 20px;
 }
 
 div.inner {
