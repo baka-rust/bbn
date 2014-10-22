@@ -8,7 +8,6 @@ import markdown
 
 os.chdir(os.path.dirname(__file__))
 templateEnv = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'))
-db = dataset.connect('sqlite:///blog.db')
 
 #TODO:
 	# with https://developer.github.com/v3/activity/feeds/
@@ -43,6 +42,7 @@ def static(filename):
 
 @route('/')
 def index():
+	db = dataset.connect('sqlite:///blog.db')
 	dict = {}
 
 	dict["posts"] = db["posts"].find(order_by='-timepost')
@@ -51,6 +51,7 @@ def index():
 	
 @route('/tagged/<tag>')
 def tagged(tag):
+	db = dataset.connect('sqlite:///blog.db')
 	dict = {}
 	dict["posts"] = []
 	
@@ -58,6 +59,7 @@ def tagged(tag):
 	
 @route('/post/<id:int>')
 def post(id):
+	db = dataset.connect('sqlite:///blog.db')
 	dict = {}
 
 	dict["post"] = db["posts"].find_one(id = id)
@@ -75,6 +77,7 @@ def update():
 	
 @route('/update', method='POST')
 def newUpdate():
+	db = dataset.connect('sqlite:///blog.db')
 	
 	title = request.forms.get('title')
 	content = request.forms.get('content')
@@ -83,8 +86,9 @@ def newUpdate():
 	
 	if title and content and tag and password:
 		if password == "dummy":
+			origianlContent = content
 			content = markdown.markdown(content)
-			db['posts'].insert( {'title': title, 'content': content, 'type': 'blog', 'tagged': tag, 'timepost': str(time.time()), 'timestamp': str(datetime.datetime.now().strftime("%b %d %Y - %I:%M %p")) } )	
+			db['posts'].insert( {'title': title, 'content': content, 'type': 'blog', 'originalContent': origianlContent, 'tagged': tag, 'timepost': str(time.time()), 'timestamp': str(datetime.datetime.now().strftime("%b %d %Y - %I:%M %p")) } )	
 	else:
 		print "fail!"
 	
