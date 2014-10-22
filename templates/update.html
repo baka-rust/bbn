@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+	new update -
+{% endblock title %}
+
+{% block content %}
+	
+	<form name="update" action="/update" method="post">
+		<table>
+			<tr>
+				<td>Title: </td>
+				<td><input type="text" name="title"></td>
+			</tr>
+			<tr>
+				<td>Content: </td>
+				<td><textarea rows="5" cols="30" name="content"></textarea></td>
+			</tr>
+			<tr>
+				<td>Tag: </td>
+				<td><input type="text" name="tag"></td>
+			</tr>
+			<tr>
+				<td>Password: </td>
+				<td><input type="password" name="password"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="submit"></td>
+			</tr>
+		</table>
+	</form>
+	
+{% endblock content %}

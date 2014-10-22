@@ -1,6 +1,6 @@
 import os
-import datetime
-from bottle import route, get, post, template, run, static_file, abort
+import datetime, time
+from bottle import route, request, redirect, template, run, static_file, abort
 import dataset
 import jinja2
 import feedparser
@@ -45,7 +45,7 @@ def static(filename):
 def index():
 	dict = {}
 
-	dict["posts"] = db["posts"].all()
+	dict["posts"] = db["posts"].find(order_by='-timepost')
 	
 	return render('index.html', dict = dict)
 	
@@ -67,16 +67,29 @@ def post(id):
 	else:
 		abort(404, "Sorry, could not find that post.")
 	
-# @get('/update')
-# def update():
-	# make a new update
-	# return ""
+@route('/update', method='GET')
+def update():
+	dict = {}
 	
-# @post('/update')
-# def saveUpdate():
-	# actually create that new update
-	# return ""
+	return render('update.html', dict = dict)
 	
+@route('/update', method='POST')
+def newUpdate():
+	
+	title = request.forms.get('title')
+	content = request.forms.get('content')
+	tag = request.forms.get('tag')
+	password = request.forms.get('password')
+	
+	if title and content and tag and password:
+		if password == "dummy":
+			content = markdown.markdown(content)
+			db['posts'].insert( {'title': title, 'content': content, 'type': 'blog', 'tagged': tag, 'timepost': str(time.time()), 'timestamp': str(datetime.datetime.now().strftime("%b %d %Y - %I:%M %p")) } )	
+	else:
+		print "fail!"
+	
+	redirect("/")
+		
 	
 if __name__ == "__main__":
 	# run as test server
