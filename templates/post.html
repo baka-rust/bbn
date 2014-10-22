@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ dict.post.id }} - 
+{% endblock title %}
+
+{% block content %}
+	{% if dict.post.type == "blog" %} 
+		<div class="post">
+			<b>blog - <a href="/post/{{ dict.post.id }}">{{ dict.post.title }}</a></b> <span class="post-info">{{ dict.post.timestamp }}</span><br/>
+			<div class="inner">
+				<p>{{ dict.post.content }}</p>
+			</div>
+		</div>
+	{% endif %}
+{% endblock content %}

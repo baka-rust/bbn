@@ -4,7 +4,7 @@
 	<head>
 		{% block head %}
 			<title>{% block title %}{% endblock title %}Sam's Bits, Bytes, and Nibbles</title>
-			<link rel="stylesheet" href="static/style.css" type="text/css" />
+			<link rel="stylesheet" href="/static/style.css" type="text/css" />
 		{% endblock head %}
 	</head>
 	
@@ -18,6 +18,10 @@
 		
 			{% block content %}
 			{% endblock content %}
+			
+			<div id="footer">
+				created by Sam J Frank with <a href="http://bottlepy.org/">bottle</a>, <a href="http://jinja.pocoo.org/">jinja2</a>, <a href="http://dataset.readthedocs.org/">dataset</a> & <a href="https://pythonhosted.org/Markdown/">markdown</a>. check out the <a href="https://github.com/baka-rust/bbn">github repo</a>.
+			</div>
 		
 		</div>
 		

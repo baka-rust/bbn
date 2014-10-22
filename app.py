@@ -1,6 +1,6 @@
 import os
 import datetime
-from bottle import route, post, template, run, static_file
+from bottle import route, get, post, template, run, static_file, abort
 import dataset
 import jinja2
 import feedparser
@@ -45,7 +45,7 @@ def static(filename):
 def index():
 	dict = {}
 
-	dict["posts"] = db['posts'].all()
+	dict["posts"] = db["posts"].all()
 	
 	return render('index.html', dict = dict)
 	
@@ -59,12 +59,26 @@ def tagged(tag):
 @route('/post/<id:int>')
 def post(id):
 	dict = {}
-	dict["posts"] = []
-	
-	return render('post.html', dict = dict)
 
+	dict["post"] = db["posts"].find_one(id = id)
+	
+	if dict["post"]:
+		return render('post.html', dict = dict)
+	else:
+		abort(404, "Sorry, could not find that post.")
+	
+# @get('/update')
+# def update():
+	# make a new update
+	# return ""
+	
+# @post('/update')
+# def saveUpdate():
+	# actually create that new update
+	# return ""
+	
 	
 if __name__ == "__main__":
 	# run as test server
-	# db['posts'].insert( {'title': 'welcome to the blog!', 'content': 'hello there friend! welcome to my blog!!', 'type':'blog', 'timestamp': str(datetime.datetime.now().strftime("%b %d %Y - %I:%M %p")) } )	
+	# db['posts'].insert( {'title': 'welcome to the blog!', 'content': 'hello there friend! welcome to my blog!!', 'type':'blog', 'tagged':'misc', 'timestamp': str(datetime.datetime.now().strftime("%b %d %Y - %I:%M %p")) } )	
 	run(host='localhost', port=8080)
