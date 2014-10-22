@@ -1,8 +1,12 @@
+import os
 from bottle import route, post, template, run, static_file
 import dataset
 import jinja2
 import feedparser
 import markdown
+
+os.chdir(os.path.dirname(__file__))
+templateEnv = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'))
 
 #TODO:
 	# with https://developer.github.com/v3/activity/feeds/
@@ -20,13 +24,10 @@ import markdown
 # helper methods
 
 def render(name, dict=None):
-	f = open('templates/'+name, 'r')
-	data = f.read()
-	f.close()
-	temp = jinja2.Template(data)
+	temp = templateEnv.get_template(name)
 	return temp.render(dict = dict)
 	
-def checkRSS():
+def checkExternalPosts():
 	# check stored timestamp, grab new feeds from github and tumblr
 	# should get called every time a page is loaded
 	pass
@@ -43,7 +44,7 @@ def index():
 	dict = {}
 	dict["posts"] = []
 	
-	return render('base.html', dict = dict)
+	return render('index.html', dict = dict)
 	
 @route('/tagged/<tag>')
 def tagged(tag):

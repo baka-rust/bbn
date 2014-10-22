@@ -61,12 +61,6 @@ img {
 div.post {
 	padding: 5px;
 	border: 1px solid #D4D4D4;
-	margin-bottom: 20px;
-}
-
-div.rss-update {
-	padding: 5px;
-	border: 1px solid #D4D4D4;
 	background: #F9F9F9;
 	margin-bottom: 20px;
 }
