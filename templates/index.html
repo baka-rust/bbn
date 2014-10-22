@@ -5,13 +5,20 @@
 
 {% block content %}
 
-	<div class="post">
-		<b>tumblr - <a href="https://github.com/mitsuhiko/jinja2">~*networking*~ (technique entirely stolen from valve)</a></b> <span class="post-info">2:16 am | 10/21/14</span><br/>
-			<div class="inner">
-				<p>
-					<img src="http://38.media.tumblr.com/1fc844b2fd94673ebf686363a7913bee/tumblr_nd1k8u7U3p1rmk5pjo1_500.gif"/><br/><br/><p>~*networking*~ (technique entirely <a href="https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking">stolen from valve</a>)</p>
-				</p>
+	{% for post in dict.posts %}
+		{% if post.type == "blog" %} 
+			<div class="post">
+				<b>blog - <a href="/post/{{ post.id }}">{{ post.title }}</a></b> <span class="post-info">{{ post.timestamp }}</span><br/>
+				<div class="inner">
+					<p>{{ post.content }}</p>
+				</div>
 			</div>
+		{% endif %}
+	{% endfor %}
+
+	<!--
+	<div class="post">
+		<b>tumblr - <a href="http://deltaspooky.tumblr.com/post/99345723370">~*networking*~ (technique entirely stolen from valve)</a></b> <span class="post-info">2:16 am | 10/21/14</span>
 	</div>
 
 	<div class="post">
@@ -28,5 +35,6 @@
 			<p>testing testing 123</p>
 		</div>
 	</div>
+	-->
 
 {% endblock content %}

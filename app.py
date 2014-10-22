@@ -1,4 +1,5 @@
 import os
+import datetime
 from bottle import route, post, template, run, static_file
 import dataset
 import jinja2
@@ -7,6 +8,7 @@ import markdown
 
 os.chdir(os.path.dirname(__file__))
 templateEnv = jinja2.Environment(loader = jinja2.FileSystemLoader('templates'))
+db = dataset.connect('sqlite:///blog.db')
 
 #TODO:
 	# with https://developer.github.com/v3/activity/feeds/
@@ -42,7 +44,8 @@ def static(filename):
 @route('/')
 def index():
 	dict = {}
-	dict["posts"] = []
+
+	dict["posts"] = db['posts'].all()
 	
 	return render('index.html', dict = dict)
 	
@@ -63,4 +66,5 @@ def post(id):
 	
 if __name__ == "__main__":
 	# run as test server
+	# db['posts'].insert( {'title': 'welcome to the blog!', 'content': 'hello there friend! welcome to my blog!!', 'type':'blog', 'timestamp': str(datetime.datetime.now().strftime("%b %d %Y - %I:%M %p")) } )	
 	run(host='localhost', port=8080)
